@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	sl := flag.String("sl", "id", "Source Language")
-	tl := flag.String("tl", "en", "Target Language")
+	sl := flag.String("sl", "en", "Source Language")
+	tl := flag.String("tl", "id", "Target Language")
 	text := flag.String("text", "Hallo world!", "Text to be translated")
 	flag.Parse()
 
