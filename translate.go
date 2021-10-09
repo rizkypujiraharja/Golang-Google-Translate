@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -33,13 +33,15 @@ func main() {
 	if httpResponse.StatusCode != 200 {
 		log.Fatalf("An Error Occured %v", httpResponse.Status)
 	}
-
 	defer httpResponse.Body.Close()
 
-	var response map[string]interface{}
-	json.NewDecoder(httpResponse.Body).Decode(&response)
+	bodyBytes, err := ioutil.ReadAll(httpResponse.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyString := string(bodyBytes)
 
 	fmt.Println("Source Language :", *sl)
 	fmt.Println("Target Language :", *tl)
-	fmt.Println("Result\t\t:", response["sentences"])
+	fmt.Println("Result\t\t:", bodyString)
 }
